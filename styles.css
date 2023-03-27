@@ -1,0 +1,22 @@
+@keyframes background-color-animation {
+    from {background-color: lightgray;}
+    to {background-color: red;}
+}
+
+body {
+    animation-name: background-color-animation;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+#button{
+    padding: 1em 1em 1em 1em;
+    background-color: black;
+    text-decoration: none;
+    width: 20%;
+}
+
+#link {
+    color:white;
+    text-decoration: none;
+}
