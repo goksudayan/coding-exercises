@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Challenge accepted</title>
+    <link href="todolist.css" rel="stylesheet">
+  </head>
+  <body>
+    <h1>ToDo List</h1>
+    <div class="todo-list">
+      <p id="notodo"><i>No todo.</i></p>
+    </div>
+    <div class="new-todo">
+      <form>
+        <label id="new-todo-label" for="new-todo-input">Add new To-Do</label>
+        <input type="text" id="new-todo-input" name="new-todo-input" value=""> 
+      </form>
+      <button type="button" id="add-todo" onclick="addNewTodo()">Add new Todo</button>
+    </div>
+  
+  <script>
+    var clicks = 0;
+    var todoCount = 0;
+
+
+    function addNewTodo() {
+      var todoList = document.querySelector(".todo-list");
+      var newTodoDiv = document.createElement("div");
+      var newTodoLabel = document.createElement("label");
+      var newTodoInput = document.createElement("input");
+
+      newTodoDiv.todoid = todoCount+1;
+
+      newTodoInput.setAttribute("type", "checkbox"); newTodoInput.setAttribute("id", "todoInput",);
+
+      newTodoLabel.setAttribute("for", "todoInput"); newTodoLabel.textContent = document.querySelector("#new-todo-input").value;
+
+      var clicks = 0;
+      newTodoDiv.onclick = function() {
+        if (clicks % 2 == 0) {
+            newTodoLabel.style.textDecoration="line-through";
+        }
+        else {
+            newTodoLabel.style.textDecoration="none";
+        }
+        clicks++;
+      }
+
+      document.querySelector("#new-todo-input").value = null;
+      
+      todoList.appendChild(newTodoDiv);
+      newTodoDiv.appendChild(newTodoInput);
+      newTodoDiv.appendChild(newTodoLabel);
+
+      todoCount++;
+      var noTodo = document.querySelector("#notodo");
+      noTodo.remove();
+
+    }
+
+  </script>
+
+</html>
