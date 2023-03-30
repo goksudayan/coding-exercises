@@ -10,15 +10,18 @@
       <div class="button" id="button-1" onclick="createShape(event); buttonWaits2()">Show</div>
       <div class="button" id="button-2" onclick="removeShape(event)">Reset</div>
     </div>
-    <canvas id="myCanvas" width="2000px" height="2000px"></canvas>
+    <div id="canvas-container">
+
+    </div>
   </body>
 
   <script>
     //two arrays: one that stores mouse tracking (single session), another that stores every session. not using the second one atm.
-    const posArrayMain = [];
-    const posArray = [];
+    var posArrayMain = [];
+    var posArray = [];
     const colors = ["blue", "green", "red", "black", "white"];
     var lineCount = 0;
+    var showLine = 0;
     const currentColor = colors[lineCount];
 
     //button wait function - initial state
@@ -46,27 +49,45 @@
       return (px, py);
     }
 
-    //creates a canvas, stylizes line. loops through two arrays to draw lines. 
+    //creates a new canvas, stylizes line, stacks them.
     function createShape(event) {
-      var c = document.getElementById("myCanvas");
+      lineCount++;
+      showLine++;
+      var canvasName = "canvas"+lineCount;
+      var canv = document.createElement("canvas");
+      canv.setAttribute("id", canvasName); canv.setAttribute("width", "2000px"); canv.setAttribute("height", "2000px");
+
+      var cc = document.querySelector("#canvas-container");
+      console.log(cc);
+      cc.appendChild(canv);
+
+      var c = document.getElementsByTagName("canvas")[lineCount-1];
+
       var ctx = c.getContext("2d");
       ctx.lineWidth = 10;
-      lineCount++;
       ctx.strokeStyle = colors[lineCount % 5];
       posArrayMain.push(posArray);
-      for (var j = 0; j < posArrayMain.length; j++) {
-        for (var i = 0; i < posArrayMain[j].length/2; i++) {
-          ctx.beginPath();
-          ctx.moveTo(posArrayMain[j][2*i], posArrayMain[j][2*i+1]);
-          ctx.lineTo(posArrayMain[j][2+2*i], posArrayMain[j][2+2*i+1]);
+      for (var i = 0; i < posArrayMain[lineCount-1].length; i++){
+        ctx.beginPath();
+        ctx.moveTo(posArrayMain[lineCount-1][2*i], posArrayMain[lineCount-1][2*i+1]);
+        ctx.lineTo(posArrayMain[lineCount-1][2+2*i], posArrayMain[lineCount-1][2+2*i+1]);
           ctx.stroke();
-        }
+          console.log("line ok");
       }
+
 
     }
     //clears canvas.
     function removeShape(event) {
-      location.reload();
+      lineCount = 0;
+      showLine = 0;
+      posArray = [];
+      posArrayMain = [];
+
+      const canvCont = document.querySelector("#canvas-container");
+      while (canvCont.firstChild) {
+        canvCont.removeChild(canvCont.firstChild);
+      }
     }
 
   </script>

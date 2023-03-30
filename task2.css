@@ -15,6 +15,7 @@ body {
     align-items: center;
     position: absolute;
     left:35%; right: 35%; top: 35%; bottom: 35%;
+    z-index: 1000;
 }
 
 .button{
@@ -30,4 +31,10 @@ body {
 
 #button-1 {
     background-color: darkgray;
+}
+
+canvas {
+    position: absolute;
+    width: 2000px;
+    height: 2000px;
 }
