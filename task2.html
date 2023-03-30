@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Challenge accepted</title>
+    <link href="task2.css" rel="stylesheet">
+  </head>
+  <body onmousemove="mousePos(event)" id="body">
+    <div class="button-container">
+      <div class="button" id="button-1" onclick="createShape(event)">Show</div>
+      <div class="button" id="button-2" onclick="removeShape(event)">Reset</div>
+    </div>
+    <canvas id="myCanvas" width="2000px" height="2000px"></canvas>
+  </body>
+
+  <script>
+    const posArrayMain = [];
+    const posArray = [];
+    const colors = ["blue", "green", "red", "black", "white"];
+    var lineCount = 0;
+    const currentColor = colors[lineCount];
+    
+    const buttonWaitTime = 1000;
+
+    const buttonTimeOut = setTimeout(buttonWaits, buttonWaitTime);
+
+    function buttonWaits() {
+      var button1 = document.querySelector("#button-1");
+      button1.style.backgroundColor="black";
+      console.log("bgchange");
+    }
+
+    function mousePos(event) {
+      var px = event.clientX;
+      var py = event.clientY;
+      posArray.push(px, py);
+      return (px, py);
+    }
+
+    function createShape(event) {
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      ctx.lineWidth = 10;
+      lineCount++;
+      ctx.strokeStyle = colors[lineCount % 5];
+      posArrayMain.push(posArray);
+      for (var j = 0; j < posArrayMain.length; j++) {
+        for (var i = 0; i < posArrayMain[j].length/2; i++) {
+          ctx.beginPath();
+          ctx.moveTo(posArrayMain[j][2*i], posArrayMain[j][2*i+1]);
+          ctx.lineTo(posArrayMain[j][2+2*i], posArrayMain[j][2+2*i+1]);
+          ctx.stroke();
+        }
+      }
+      console.log(posArrayMain);
+      console.log(lineCount);
+      console.log("current color: " + colors[lineCount]);
+    }
+
+    function removeShape(event) {
+      var oldCanvas = document.getElementById("myCanvas");
+      oldCanvas.remove();
+      posArray.length=0;
+      posArrayMain.length=0;
+
+
+      var newCanvas = document.createElement("canvas");
+      newCanvas.setAttribute("id", "myCanvas"); newCanvas.setAttribute("width", "2000px"); newCanvas.setAttribute("height", "2000px");
+      var body1 = document.querySelector("#body");
+      body1.appendChild(newCanvas);
+      console.log("appended");
+    }
+
+
+
+
+
+
+  </script>
+
+</html>
