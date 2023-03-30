@@ -7,29 +7,38 @@
   </head>
   <body onmousemove="mousePos(event)" id="body">
     <div class="button-container">
-      <div class="button" id="button-1" onclick="createShape(event)">Show</div>
+      <div class="button" id="button-1" onclick="createShape(event); buttonWaits2()">Show</div>
       <div class="button" id="button-2" onclick="removeShape(event)">Reset</div>
     </div>
     <canvas id="myCanvas" width="2000px" height="2000px"></canvas>
   </body>
 
   <script>
+    //two arrays: one that stores mouse tracking (single session), another that stores every session. not using the second one atm.
     const posArrayMain = [];
     const posArray = [];
     const colors = ["blue", "green", "red", "black", "white"];
     var lineCount = 0;
     const currentColor = colors[lineCount];
-    
-    const buttonWaitTime = 1000;
 
-    const buttonTimeOut = setTimeout(buttonWaits, buttonWaitTime);
-
-    function buttonWaits() {
+    //button wait function - initial state
+    const buttonWaitTime = 1000 + Math.floor(Math.random() * 3000);
+    const buttonTimeOut = setTimeout(function() {
       var button1 = document.querySelector("#button-1");
       button1.style.backgroundColor="black";
-      console.log("bgchange");
+    }, buttonWaitTime);
+    
+    //button wait function - recurring state
+    function buttonWaits2() {
+      var button1 = document.querySelector("#button-1");
+      button1.style.backgroundColor = "darkgray";
+      const buttonWaitTime = 1000 + Math.floor(Math.random() * 3000);
+      const buttonTimeOut = setTimeout(function(){
+        document.querySelector("#button-1").style.backgroundColor="black";
+      }, buttonWaitTime);
     }
 
+    //gets mouse position
     function mousePos(event) {
       var px = event.clientX;
       var py = event.clientY;
@@ -37,6 +46,7 @@
       return (px, py);
     }
 
+    //creates a canvas, stylizes line. loops through two arrays to draw lines. 
     function createShape(event) {
       var c = document.getElementById("myCanvas");
       var ctx = c.getContext("2d");
@@ -52,29 +62,15 @@
           ctx.stroke();
         }
       }
-      console.log(posArrayMain);
-      console.log(lineCount);
-      console.log("current color: " + colors[lineCount]);
-    }
 
+    }
+    //clears canvas.
     function removeShape(event) {
       var oldCanvas = document.getElementById("myCanvas");
       oldCanvas.remove();
       posArray.length=0;
       posArrayMain.length=0;
-
-
-      var newCanvas = document.createElement("canvas");
-      newCanvas.setAttribute("id", "myCanvas"); newCanvas.setAttribute("width", "2000px"); newCanvas.setAttribute("height", "2000px");
-      var body1 = document.querySelector("#body");
-      body1.appendChild(newCanvas);
-      console.log("appended");
     }
-
-
-
-
-
 
   </script>
 
