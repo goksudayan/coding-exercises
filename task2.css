@@ -30,7 +30,8 @@ button{
 }
 
 button:disabled {
-    background-color: darkgray;
+    cursor: default;
+    background-color: red;
 }
 
 canvas {

@@ -7,7 +7,7 @@
   </head>
   <body onmousemove="mousePos(event)" id="body">
     <div class="button-container">
-      <button id="button-1" onclick="createShape(event); buttonWaits2()" disabled>Show</button>
+      <button id="button-1" onclick="createShape(event)" disabled>Show</button>
       <button id="button-2" onclick="removeShape(event)" disabled>Reset</button>
     </div>
     <div id="canvas-container">
@@ -26,33 +26,13 @@
     
     var button1 = document.querySelector("#button-1");
     var button2 = document.querySelector("#button-2");
-    console.log("button disabled");
     const buttonWaitTime = 1000 + Math.floor(Math.random() * 3000);
 
-    if (button1.disabled == true) {
-      button1.style.backgroundColor="red";
-    }
-    if (button2.disabled == true) {
-      button2.style.backgroundColor = "red";
-    }
+    //button functions
 
-
-
-
-
-    //button wait function - initial state
-    const buttonTimeOut = setTimeout(function() {
+    const enableButton = setTimeout(function(){
       button1.disabled = false; button2.disabled = false;
-      button1.style.backgroundColor = "black"; button2.style.backgroundColor = "black";
     }, buttonWaitTime);
-    
-    //button wait function - recurring state
-    function buttonWaits2() {
-      const buttonTimeOut = setTimeout(function(){
-        button1.disabled = false; button2.disabled = false;
-        console.log("buton actv");
-      }, buttonWaitTime);
-    }
 
     //gets mouse position
     function mousePos(event) {
@@ -86,7 +66,11 @@
         ctx.lineTo(posArrayMain[lineCount-1][2+2*i], posArrayMain[lineCount-1][2+2*i+1]);
           ctx.stroke();
       }
-
+      button1.disabled = true;
+      
+      const enableButton = setTimeout(function(){
+      button1.disabled = false; button2.disabled = false;
+    }, buttonWaitTime);
 
     }
     //clears canvas.
