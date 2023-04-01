@@ -18,18 +18,18 @@ body {
     z-index: 1000;
 }
 
-.button{
+button{
     padding: 2em 3em 2em 3em;
-    background-color: black;
     text-decoration: none;
     color: white;
     margin: auto auto auto auto;
     text-align: center;
     align-self: center;
     cursor: pointer;
+    background-color: black;
 }
 
-#button-1 {
+button:disabled {
     background-color: darkgray;
 }
 

@@ -7,8 +7,8 @@
   </head>
   <body onmousemove="mousePos(event)" id="body">
     <div class="button-container">
-      <div class="button" id="button-1" onclick="createShape(event); buttonWaits2()">Show</div>
-      <div class="button" id="button-2" onclick="removeShape(event)">Reset</div>
+      <button id="button-1" onclick="createShape(event); buttonWaits2()" disabled>Show</button>
+      <button id="button-2" onclick="removeShape(event)" disabled>Reset</button>
     </div>
     <div id="canvas-container">
 
@@ -23,21 +23,34 @@
     var lineCount = 0;
     var showLine = 0;
     const currentColor = colors[lineCount];
+    
+    var button1 = document.querySelector("#button-1");
+    var button2 = document.querySelector("#button-2");
+    console.log("button disabled");
+    const buttonWaitTime = 1000 + Math.floor(Math.random() * 3000);
+
+    if (button1.disabled == true) {
+      button1.style.backgroundColor="red";
+    }
+    if (button2.disabled == true) {
+      button2.style.backgroundColor = "red";
+    }
+
+
+
+
 
     //button wait function - initial state
-    const buttonWaitTime = 1000 + Math.floor(Math.random() * 3000);
     const buttonTimeOut = setTimeout(function() {
-      var button1 = document.querySelector("#button-1");
-      button1.style.backgroundColor="black";
+      button1.disabled = false; button2.disabled = false;
+      button1.style.backgroundColor = "black"; button2.style.backgroundColor = "black";
     }, buttonWaitTime);
     
     //button wait function - recurring state
     function buttonWaits2() {
-      var button1 = document.querySelector("#button-1");
-      button1.style.backgroundColor = "darkgray";
-      const buttonWaitTime = 1000 + Math.floor(Math.random() * 3000);
       const buttonTimeOut = setTimeout(function(){
-        document.querySelector("#button-1").style.backgroundColor="black";
+        button1.disabled = false; button2.disabled = false;
+        console.log("buton actv");
       }, buttonWaitTime);
     }
 
@@ -58,21 +71,20 @@
       canv.setAttribute("id", canvasName); canv.setAttribute("width", "2000px"); canv.setAttribute("height", "2000px");
 
       var cc = document.querySelector("#canvas-container");
-      console.log(cc);
       cc.appendChild(canv);
 
       var c = document.getElementsByTagName("canvas")[lineCount-1];
 
       var ctx = c.getContext("2d");
       ctx.lineWidth = 10;
-      ctx.strokeStyle = colors[lineCount % 5];
+      const lineColor = colors[lineCount % 5];
+      ctx.strokeStyle = lineColor;
       posArrayMain.push(posArray);
       for (var i = 0; i < posArrayMain[lineCount-1].length; i++){
         ctx.beginPath();
         ctx.moveTo(posArrayMain[lineCount-1][2*i], posArrayMain[lineCount-1][2*i+1]);
         ctx.lineTo(posArrayMain[lineCount-1][2+2*i], posArrayMain[lineCount-1][2+2*i+1]);
           ctx.stroke();
-          console.log("line ok");
       }
 
 
